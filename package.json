@@ -1,0 +1,21 @@
+{
+  "name": "koishi-plugin-eve-jita-price",
+  "description": "eve欧服jita查价功能",
+  "version": "1.0.6",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist",
+    "src"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "peerDependencies": {
+    "koishi": "^4.17.6"
+  }
+}
