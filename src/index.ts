@@ -71,11 +71,17 @@ export function apply(ctx: Context, cfg: Config): void {
   }
 
   async function getItemPrice(itemId: number, locationId: string, method: 'buy' |'sell'): Promise<number[]> {
-    try {
-      return ((await ctx.http.get(`https://esi.evetech.net/latest/markets/${locationId}/orders/?datasource=tranquility&order_type=${method}&type_id=${itemId}`)) as { price: number }[]).map(order => order.price)
-    } catch {
-      return [NaN]
+    for (let i = 0; i < 5; i++) {
+      // 至多尝试 5 次，防止死循环
+      try {
+        return ((await ctx.http.get(`https://esi.evetech.net/latest/markets/${locationId}/orders/?datasource=tranquility&order_type=${method}&type_id=${itemId}`)) as { price: number }[]).map(order => order.price)
+      } catch {
+        console.error("请求失败，正在重试:");
+        // 每1秒重试一次
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
     }
+    return [NaN]
   }
 
   function gunzip(): itemInfo[] {
