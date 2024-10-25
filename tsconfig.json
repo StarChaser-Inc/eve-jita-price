@@ -21,6 +21,9 @@
   },
   "include": [
     "src",
-    "src/sde.json"
+    "src/types.json.gz"
+  ],
+  "exclude": [
+    "builder.js"
   ]
 }
