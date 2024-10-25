@@ -36,6 +36,26 @@ function formatNumberWithCommas(num: number | string): string {
   return fraction ? `${formattedInteger}.${fraction}` : formattedInteger
 }
 
+async function fetchPrices(type: string,ctx: any, search: { id: number }[], i: number): Promise<number[]> {
+    let price: number[] = [];
+
+    while (true) {
+        try {
+            const response = await ctx.http.get(
+                `https://esi.evetech.net/latest/markets/10000002/orders/?datasource=tranquility&order_type=${type}&type_id=${search[i].id}`
+            );
+            price = response.map(order => order.price);
+            break; // 请求成功，跳出循环
+        } catch (error) {
+            console.error("请求失败，正在重试:", error);
+            // 每1秒重试一次
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+
+    return price;
+}
+
 export function apply(ctx: Context, cfg: Config) {
   let typeIDs: json[]
   ctx.on('ready', () => {
@@ -97,8 +117,8 @@ export function apply(ctx: Context, cfg: Config) {
       const price = []
       for (let i = 0; i < search.length; i++){
         if (i + 1 >= cfg.maxSearch) break
-        const buy = (await ctx.http.get(`https://esi.evetech.net/latest/markets/10000002/orders/?datasource=tranquility&order_type=buy&type_id=${search[i].id}`)).map(order => order.price)
-        const sell = (await ctx.http.get(`https://esi.evetech.net/latest/markets/10000002/orders/?datasource=tranquility&order_type=sell&type_id=${search[i].id}`)).map(order => order.price)
+        const buy = await fetchPrices('buy',ctx, search, i)
+        const sell = await fetchPrices('sell',ctx, search, i)
         const maxbuy = Math.max(...buy)
         const minsell = Math.min(...sell)
         const mprice = (maxbuy + minsell) / 2
