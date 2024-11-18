@@ -118,7 +118,7 @@ export function apply(ctx: Context, cfg: Config): void {
       let allBuy = 0
       let allM = 0
       if (items.every(i => i.groupID === 300) && items.length === 6) suit = true
-      if (items.every(i => i.id === 44992) && items.length === 1) plex = true
+      if (items.every(i => i.id == 44992) && items.length === 1) plex = true
       let mArr = []
       for (const item of items) {
         const maxBuy = Math.max(...(await getItemPrice(item.id, location, 'buy')))
