@@ -60,7 +60,7 @@ export function apply(ctx: Context, cfg: Config): void {
 
   function search(name: string, types: itemInfo[]): itemInfo[] {
     return types.filter(item =>
-      (item.name && item.name.zh && item.name.zh.startsWith(name)) ||
+      (item.name && item.name.zh && item.name.zh.toUpperCase().startsWith(name.toUpperCase())) ||
       (item.name && item.name.en && item.name.en.toUpperCase().startsWith(name.toUpperCase())) ||
       (item.name && item.name.de && item.name.de.startsWith(name)) ||
       (item.name && item.name.fr && item.name.fr.startsWith(name)) ||
