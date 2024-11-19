@@ -132,11 +132,13 @@ export function apply(ctx: Context, cfg: Config): void {
         mArr.push(`${item.name.zh}/${item.name.en}\n  -最低卖价：${formatNumberWithCommas(minSell)} ISK\n  -平均价格：${formatNumberWithCommas(m)} ISK\n  -最高买价：${formatNumberWithCommas(maxBuy)} ISK`)
       }
       if (suit) {
-        mArr.push(`以上物品总价\n  -最低卖价：${formatNumberWithCommas(allSell)} ISK\n  -平均价格：${formatNumberWithCommas(allM)} ISK\n  -最高买价：${formatNumberWithCommas(allBuy)} ISK\n`)
+        mArr.push(`以上物品总价\n  -最低卖价：${formatNumberWithCommas(allSell)} ISK\n  -平均价格：${formatNumberWithCommas(allM)} ISK\n  -最高买价：${formatNumberWithCommas(allBuy)} ISK`)
       }
       if (plex) {
-        mArr.push(`500x PLEX\n  -最低卖价：${formatNumberWithCommas(allSell * 500)} ISK\n  -平均价格：${formatNumberWithCommas(allM * 500)} ISK\n  -最高买价：${formatNumberWithCommas(allBuy * 500)} ISK\n`)
+        mArr.push(`500x PLEX\n  -最低卖价：${formatNumberWithCommas(allSell * 500)} ISK\n  -平均价格：${formatNumberWithCommas(allM * 500)} ISK\n  -最高买价：${formatNumberWithCommas(allBuy * 500)} ISK`)
       }
+
+      mArr.push(`采星科技，震撼人心`)
       return mArr.join('\n--------------\n')
     })
   }
