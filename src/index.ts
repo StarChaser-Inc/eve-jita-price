@@ -313,9 +313,11 @@ export function apply(ctx: Context, cfg: Config): void {
       types = gunzip()
     }
   })
+
   for (const { command, location } of cfg.customPriceInquiryInstructionsAndLocation) {
-    ctx.command(`${command} <...itemName>`, "查看 jita 市场价格，物品名称前后添加看盘可以展示图片")
-    .action(async (_, ...itemName) => {
+    ctx.command(`${command} <...itemName>`, "查看 jita 市场价格")
+    .option('k', '-k')
+    .action(async ({options}, ...itemName) => {
       let name = itemName.join(' ')
       if (!name) return '请输入物品名称'
       if (cfg.customSpecialFields.map(field => field.monitoringContent).includes(name)) {
@@ -323,9 +325,8 @@ export function apply(ctx: Context, cfg: Config): void {
         else _.session.send(cfg.customSpecialFields.find(field => field.monitoringContent === name).response)
       }
       let kanpan = false
-      if (name.includes('看盘')){
+      if (options.k){
           kanpan = true
-          name = name.replace('看盘', '').trim()
       }
       let uTypes: itemInfo[] = []
       if (types) uTypes = types
