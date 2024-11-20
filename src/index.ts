@@ -314,7 +314,7 @@ export function apply(ctx: Context, cfg: Config): void {
     }
   })
   for (const { command, location } of cfg.customPriceInquiryInstructionsAndLocation) {
-    ctx.command(`${command} <...itemName>`)
+    ctx.command(`${command} <...itemName>`, "查看 jita 市场价格，物品名称前后添加看盘可以展示图片")
     .action(async (_, ...itemName) => {
       let name = itemName.join(' ')
       if (!name) return '请输入物品名称'
@@ -369,5 +369,7 @@ export function apply(ctx: Context, cfg: Config): void {
         return mArr.join('\n--------------\n')
       }
     })
+      .usage('命令格式：jita 物品名称')
+        .example('jita plex')
   }
 }
