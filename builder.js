@@ -14,7 +14,7 @@ for (const key in data) {
     newFile.push({
       id: key,
       name: data[key].name,
-      groupID: data[key].group
+      groupID: data[key].groupID
     })
   }
 }
