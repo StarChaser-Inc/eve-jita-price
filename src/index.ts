@@ -61,7 +61,7 @@ export function apply(ctx: Context, cfg: Config): void {
 
   function search(name: string, types: itemInfo[]): itemInfo[] {
     return types.filter(item =>
-      (item.name && item.name.zh && item.name.zh.toUpperCase().startsWith(name.toUpperCase())) ||
+      (item.name && item.name.zh && item.name.zh.toUpperCase().includes(name.toUpperCase())) ||
       (item.name && item.name.en && item.name.en.toUpperCase().startsWith(name.toUpperCase())) ||
       (item.name && item.name.de && item.name.de.startsWith(name)) ||
       (item.name && item.name.fr && item.name.fr.startsWith(name)) ||
@@ -145,12 +145,12 @@ export function apply(ctx: Context, cfg: Config): void {
       <script>
         // Sample data
         var data = ${pngshuju};
-    
+
         // Extract price and quantity data
         var highPrices = data.map(row => row[1]);
         var lowPrices = data.map(row => row[2]);
         var quantities = data.map(row => row[3]);
-    
+
         // Function to format y axis ticks with units
         function formatTicks(value, index, values) {
           var units = ['', 'k', 'm', 'b', 't'];
@@ -159,12 +159,12 @@ export function apply(ctx: Context, cfg: Config): void {
           var tickValue = value / Math.pow(10, unitIndex * 3);
           return tickValue + unitLabel;
         }
-    
+
         // Function to filter labels to display every other label
         function filterLabels(value, index, values) {
           return index % 2 === 0 ? value : '';
         }
-    
+
         // Chart configuration for price
         var priceConfig = {
           type: 'line',
@@ -223,7 +223,7 @@ export function apply(ctx: Context, cfg: Config): void {
             }
           }
         };
-    
+
         // Chart configuration for quantity
         var quantityConfig = {
           type: 'line',
@@ -264,13 +264,13 @@ export function apply(ctx: Context, cfg: Config): void {
             }
           }
         };
-    
+
         // Create price chart
         var priceChart = new Chart(
           document.getElementById('priceChart'),
           priceConfig
         );
-    
+
         // Create quantity chart
         var quantityChart = new Chart(
           document.getElementById('quantityChart'),
@@ -279,7 +279,7 @@ export function apply(ctx: Context, cfg: Config): void {
       </script>
     </body>
     </html>
-    
+
       `;
     const page = await ctx.puppeteer.page();
     try {
